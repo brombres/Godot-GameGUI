@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>GGButton</title>
+    <g id="GGButton" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="Rectangle-Copy-13" fill="#8EEF97" fill-rule="nonzero" x="1" y="11" width="2" height="4"></rect>
+        <rect id="Rectangle-Copy-14" fill="#8EEF97" fill-rule="nonzero" x="1" y="1" width="2" height="4"></rect>
+        <rect id="Rectangle-Copy-17" fill="#8EEF97" fill-rule="nonzero" x="3" y="1" width="2" height="2"></rect>
+        <rect id="Rectangle-Copy-18" fill="#8EEF97" fill-rule="nonzero" x="11" y="1" width="2" height="2"></rect>
+        <rect id="Rectangle-Copy-19" fill="#8EEF97" fill-rule="nonzero" x="11" y="13" width="2" height="2"></rect>
+        <rect id="Rectangle-Copy-20" fill="#8EEF97" fill-rule="nonzero" x="3" y="13" width="2" height="2"></rect>
+        <rect id="Rectangle-Copy-15" fill="#8EEF97" fill-rule="nonzero" x="13" y="1" width="2" height="4"></rect>
+        <rect id="Rectangle-Copy-16" fill="#8EEF97" fill-rule="nonzero" x="13" y="11" width="2" height="4"></rect>
+        <path d="M4,10.5 C4,9.669 4.669,9 5.5,9 L10.5,9 C11.331,9 12,9.669 12,10.5 L12,12 L4,12 Z M9,1 L9,4.1328 L10.4453,3.16796 L11.5547,4.83206 L8.5547,6.83206 C8.21879253,7.05596586 7.78120747,7.05596586 7.4453,6.83206 L4.4453,4.83206 L5.5547,3.16796 L7,4.1328 L7,1 L9,1 Z" id="Combined-Shape" fill="#8EEF97" fill-rule="nonzero"></path>
+    </g>
+</svg>
