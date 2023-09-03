@@ -9,9 +9,12 @@ Platform  | Godot 4.x (tested on 4.2-dev3)
 License   | [MIT License](LICENSE.md)
 Author    | Brom Bresenham
 
-![DemoGif](Media/Images/Demo.gif)
+<center>![DemoGif](Media/Images/Demo.gif)</center>
+<center><i>DemoProject - included in this repo</i></center>
 
-![DemoGif](Media/Images/AxorUI.gif)
+
+<center>![DemoGif](Media/Images/AxorUI.gif)</center>
+<center><i>Axor the Mighty - see how this was built in the <a href="https://youtu.be/Bq8M416Lcz4?si=9NVwZfn5KlI3fstB">Week 6 Devlog</a></i></center>
 
 # About
 GameGUI is a set of Godot Control nodes that provide alternative layout capabilities to Godot's built-in Container classes. With Godot's built-in containers it is easy to make fixed-layout user interfaces that scale with the screen resolution *or* dynamic (responsive) layouts with fixed-size controls (such as labels), but it can be difficult to make dynamic layouts with scaling controls and text, and that's where GameGUI fits in.
