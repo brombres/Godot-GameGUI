@@ -6,7 +6,7 @@ About     | Current Release
 Version   | 1.1
 Date      | September 5, 2023
 Platform  | Godot 4.x (tested on 4.2-dev3)
-License   | [MIT License](LICENSE.md)
+License   | [MIT License](LICENSE)
 Author    | Brom Bresenham
 
 ![DemoGif](Media/Images/Demo.gif)
