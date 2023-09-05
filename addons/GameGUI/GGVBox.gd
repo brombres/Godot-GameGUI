@@ -32,15 +32,15 @@ func _resolve_child_sizes( available_size:Vector2, limited:bool=false ):
 	var fixed_height := 0
 	var min_height := 0
 
-	# Leave all children at their minimum height except for aspect-fit-height and
-	# proportional nodes, which are set to their maximum size. Shrink-to-fit
-	# children are treated as fixed size.
+	# Leaving other children at their minimum height, set aspect-fit, proportional,
+	# and shrink-to-fit height nodes to their maximum size.
+	var modes = [GGComponent.ScalingMode.ASPECT_FIT,GGComponent.ScalingMode.PROPORTIONAL,GGComponent.ScalingMode.SHRINK_TO_FIT]
 	for i in range(get_child_count()):
 		var child = get_child(i)
 		if not child.visible or not child is Control: continue
 
 		var has_mode = child is GGComponent or child.has_method("request_layout")
-		if has_mode and child.vertical_mode in [GGComponent.ScalingMode.ASPECT_FIT,GGComponent.ScalingMode.PROPORTIONAL]:
+		if has_mode and child.vertical_mode in modes:
 			_resolve_child_size( child, available_size, limited )
 			var h = int(child.size.y)
 			min_height += h

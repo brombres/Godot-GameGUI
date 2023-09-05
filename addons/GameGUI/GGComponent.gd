@@ -360,7 +360,7 @@ func _resolve_size( available_size:Vector2, limited:bool=false ):
 	#   to figure out the size of this node.
 	available_size = _resolve_component_size( self, available_size )
 	var inner_size = _with_margins( Rect2(Vector2(0,0), available_size) ).size
-	if not limited or horizontal_mode == ScalingMode.SHRINK_TO_FIT or vertical_mode == ScalingMode.SHRINK_TO_FIT:
+	if not limited or ScalingMode.SHRINK_TO_FIT in [horizontal_mode,vertical_mode]:
 		_resolve_child_sizes( inner_size, limited )
 		_resolve_shrink_to_fit_size( self, available_size )
 
