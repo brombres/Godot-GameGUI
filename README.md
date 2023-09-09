@@ -1,13 +1,14 @@
 # Godot-GameGUI
 A Godot 4.x plug-in that implements a rich and robust dynamic layout and sizing system for building user interfaces.
 
-About     | Current Release
-----------|-----------------------
-Version   | 1.1
-Date      | September 5, 2023
-Platform  | Godot 4.x (tested on 4.2-dev3)
-License   | [MIT License](LICENSE)
-Author    | Brom Bresenham
+About      | Current Release
+-----------|-----------------------
+Version    | 1.1
+Date       | September 5, 2023
+Change Log | [Change Log](ChangeLog.md)
+Platform   | Godot 4.x (tested on 4.2-dev3)
+License    | [MIT License](LICENSE)
+Author     | Brom Bresenham
 
 ![DemoGif](Media/Images/Demo.gif)
 

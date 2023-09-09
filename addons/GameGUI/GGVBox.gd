@@ -4,6 +4,19 @@
 class_name GGVBox
 extends GGComponent
 
+enum VerticalContentAlignment
+{
+	TOP,     ## Top-align the content.
+	CENTER,  ## Center the content.
+	BOTTOM   ## Bottom-align the content.
+}
+
+## Specify the vertical alignment of the content as a whole.
+@export var content_alignment := VerticalContentAlignment.CENTER :
+	set(value):
+		content_alignment = value
+		request_layout()
+
 var _min_heights:Array[int] = []
 var _max_heights:Array[int] = []
 
@@ -138,10 +151,19 @@ func _perform_layout( available_bounds:Rect2 ):
 	_place_component( self, available_bounds )
 
 	var inner_bounds = _with_margins( Rect2(Vector2(0,0),size) )
+	var pos = inner_bounds.position
+	var sz = inner_bounds.size
+
+	var diff = sz.y - _get_sum_of_child_sizes().y
+	match content_alignment:
+		VerticalContentAlignment.TOP:    pass
+		VerticalContentAlignment.CENTER: pos.y += int(diff/2.0)
+		VerticalContentAlignment.BOTTOM: pos.y += diff
 
 	for i in range(get_child_count()):
 		var child = get_child(i)
 		if not (child is Control) or not child.visible: continue
 		if child is Control:
-			_perform_component_layout( child, Rect2(inner_bounds.position,Vector2(inner_bounds.size.x,child.size.y)) )
-			inner_bounds.position += Vector2( 0, child.size.y )
+			_perform_component_layout( child, Rect2(pos,Vector2(sz.x,child.size.y)) )
+			pos += Vector2( 0, child.size.y )
+
