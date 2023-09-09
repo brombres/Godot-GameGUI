@@ -86,14 +86,14 @@ enum ScaleFactor
 		request_layout()
 
 ## The horizontal scale factor to use when [member h_scale_factor] is [b]Constant[/b].
-@export_range(0.0,1.0,0.0001) var h_scale_constant:float = 1.0 :
+@export_range(0.0,1.0,0.0001,"or_greater") var h_scale_constant:float = 1.0 :
 	set(value):
 		if h_scale_constant == value: return
 		h_scale_constant = value
 		request_layout()
 
 ## The vertical scale factor to use when [member v_scale_factor] is [b]Constant[/b].
-@export_range(0.0,1.0,0.0001) var v_scale_constant:float = 1.0 :
+@export_range(0.0,1.0,0.0001,"or_greater") var v_scale_constant:float = 1.0 :
 	set(value):
 		if v_scale_constant == value: return
 		v_scale_constant = value
