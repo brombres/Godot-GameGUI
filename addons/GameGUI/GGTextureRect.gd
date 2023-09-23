@@ -16,7 +16,7 @@ extends TextureRect
 		if horizontal_mode == value: return
 		horizontal_mode = value
 		if value in [GGComponent.ScalingMode.ASPECT_FIT,GGComponent.ScalingMode.ASPECT_FILL]:
-			if not (vertical_mode in [value,GGComponent.ScalingMode.EXPAND_TO_FILL,GGComponent.ScalingMode.SHRINK_TO_FIT,GGComponent.ScalingMode.PARAMETER]): vertical_mode = value
+			if vertical_mode in [GGComponent.ScalingMode.PROPORTIONAL,GGComponent.ScalingMode.FIXED,GGComponent.ScalingMode.PARAMETER]: vertical_mode = value
 			if layout_size.x  < 0.0001: layout_size.x = 1
 			if layout_size.y  < 0.0001: layout_size.y = 1
 		elif vertical_mode in [GGComponent.ScalingMode.ASPECT_FIT,GGComponent.ScalingMode.ASPECT_FILL]:
@@ -32,7 +32,7 @@ extends TextureRect
 		if vertical_mode == value: return
 		vertical_mode = value
 		if value in [GGComponent.ScalingMode.ASPECT_FIT,GGComponent.ScalingMode.ASPECT_FILL]:
-			if not (horizontal_mode in [value,GGComponent.ScalingMode.EXPAND_TO_FILL,GGComponent.ScalingMode.SHRINK_TO_FIT,GGComponent.ScalingMode.PARAMETER]): horizontal_mode = value
+			if horizontal_mode in [GGComponent.ScalingMode.PROPORTIONAL,GGComponent.ScalingMode.FIXED,GGComponent.ScalingMode.PARAMETER]: horizontal_mode = value
 			if abs(layout_size.x)  < 0.0001: layout_size.x = 1
 			if abs(layout_size.y)  < 0.0001: layout_size.y = 1
 		elif horizontal_mode in [GGComponent.ScalingMode.ASPECT_FIT,GGComponent.ScalingMode.ASPECT_FILL]:

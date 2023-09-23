@@ -159,13 +159,21 @@ Each GameGUI component supports the following seven scaling modes. Horizontal an
 Mode | Description
 -----|--------------
 **Expand-to-Fill** | The component stretches or compresses to fill the available area.<br><br>![Expand-to-Fill Demo](Media/Images/ScalingMode-ExpandToFill.gif)
-**Aspect-Fit** | The component maintains its aspect ratio and is sized as large as possible while still fitting in the available area.<br><br>![Aspect-Fit Demo](Media/Images/ScalingMode-AspectFit.gif)<br><br>The <b>Layout Size</b> property should be set to the desired aspect ratio. Note that 1680x840 has the same effect as 168x84, etc.<br><br>![Aspect-Layout-Size](Media/Images/ScalingMode-AspectFit-LayoutSize.png)
-**Aspect-Fill** | The component maintains its aspect ratio and is sized as small as possible while still completely filling the available area.<br><br>![Aspect-Fill Demo](Media/Images/ScalingMode-AspectFill.gif)<br><br>Note that Container Sizing options can be used to pin the content to a side or a corner.<br><br>![Aspect-Fill Demo 2](Media/Images/ScalingMode-AspectFill-2.gif)
+**Aspect-Fit** | The component maintains the specified aspect ratio and is sized as large as possible while still fitting in the available area.<br><br>![Aspect-Fit Demo](Media/Images/ScalingMode-AspectFit.gif)<br><br>The <b>Layout Size</b> property should be set to the desired aspect ratio. Note that 1680x840 has the same effect as 168x84, etc.<br><br>![Aspect-Layout-Size](Media/Images/ScalingMode-AspectFit-LayoutSize.png)
+**Aspect-Fill** | The component maintains the specified aspect ratio and is sized as small as possible while still completely filling the available area.<br><br>![Aspect-Fill Demo](Media/Images/ScalingMode-AspectFill.gif)<br><br>Note that Container Sizing options can be used to pin the content to a side or a corner.<br><br>![Aspect-Fill Demo 2](Media/Images/ScalingMode-AspectFill-2.gif)
 **Proportional** | Proportional mode can be used in one of two ways:<br><br>1. In the standard mode, the node size or other applicable property (such as GGMarginLayout margins) becomes a fraction of its available layout area, from 0.0 to 1.0.<br>![Proportional Demo](Media/Images/ScalingMode-Proportional-1.gif)<br><br>2. Alternatively, a component's `reference node` property can be set and the proportional value is now relative to the size of the reference node. The reference node should be in a higher subtree (closer to the root) than the node referencing it to ensure that the reference node size is determined first. In the example below, a square-aspect component is used as the reference node for a GGMarginLayout so that the gap around the image has the same thickness on all sides.<br>![Proportional Demo](Media/Images/ScalingMode-Proportional-2.gif)
 **Shrink-to-Fit** | The component is sized as small as possible to enclose all of its children. For example, here is a GGVBox with fixed-size children set to **Shrink-to-Fit**.<br><br>![Shrink-to-Fit](Media/Images/ScalingMode-ShrinkToFit.png)
 **Fixed** | The component uses **Layout Size** as a fixed pixel size.<br><br>![Fixed](Media/Images/ScalingMode-Fixed.gif)
 **Parameter** | The component sets its pixel size to the subtree parameters named by the properties **Width Parameter** and/or **Height Parameter**. Create a `GGLayoutConfig` config as the first child of a GameGUI subtree, extend its script, add the `@tool` annotation, and override `func _on_begin_layout(display_size:Vector2)` to update parameters (via `set_parameter(name:String,value:Variant)`, `get_parameter(name:String)->Variant`, and/or `has_parameter(name:String)->bool`) whenever the layout is about to be updated.<br><br>![Fixed](Media/Images/ScalingMode-Parameter.gif)<br><br>Parameter values can be added, inspected, and removed in the editor by examining the **Parameters** property of a GameGUI subtree root.<br><br>![Parameter-2](Media/Images/ScalingMode-Parameter-2.png)
 
+## Aspect Mode Combinations
+
+Horizontal Mode | Vertical Mode | Effect
+----------------|---------------|-------
+Aspect-Fit      | Aspect-Fit    | Component maintains the specified aspect ratio and is sized as large as possible while still fitting in the available area.
+Aspect-Fill     | Aspect-Fill   | Component maintains the specified aspect ratio and is sized as small as possible while still completely filling the available area.
+Aspect-Fill     | Aspect-Fit    | Component occupies all available width while maintaining the specified aspect ratio.
+Aspect-Fit      | Aspect-Fill   | Component occupies all available height while maintaining the specified aspect ratio.
 
 # Component Details
 

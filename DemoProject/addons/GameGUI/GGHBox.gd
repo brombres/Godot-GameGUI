@@ -4,6 +4,19 @@
 class_name GGHBox
 extends GGComponent
 
+enum HorizontalContentAlignment
+{
+	LEFT,    ## Left-align the content.
+	CENTER,  ## Center the content.
+	RIGHT    ## Right-align the content.
+}
+
+## Specify the horizontal alignment of the content as a whole.
+@export var content_alignment := HorizontalContentAlignment.CENTER :
+	set(value):
+		content_alignment = value
+		request_layout()
+
 var _min_widths:Array[int] = []
 var _max_widths:Array[int] = []
 
@@ -32,15 +45,15 @@ func _resolve_child_sizes( available_size:Vector2, limited:bool=false ):
 	var fixed_width := 0
 	var min_width := 0
 
-	# Leave all children at their minimum width except for aspect-fit-width and
-	# proportional nodes, which are set to their maximum size. Shrink-to-fit
-	# children are treated as fixed size.
+	# Leaving other children at their minimum width, set aspect-fit, proportional,
+	# and shrink-to-fit width nodes to their maximum size.
+	var modes = [GGComponent.ScalingMode.ASPECT_FIT,GGComponent.ScalingMode.PROPORTIONAL,GGComponent.ScalingMode.SHRINK_TO_FIT]
 	for i in range(get_child_count()):
 		var child = get_child(i)
 		if not child.visible or not child is Control: continue
 
 		var has_mode = child is GGComponent or child.has_method("request_layout")
-		if has_mode and child.horizontal_mode in [GGComponent.ScalingMode.ASPECT_FIT,GGComponent.ScalingMode.PROPORTIONAL]:
+		if has_mode and child.horizontal_mode in modes:
 			_resolve_child_size( child, available_size, limited )
 			var w = int(child.size.x)
 			min_width += w
@@ -138,10 +151,18 @@ func _perform_layout( available_bounds:Rect2 ):
 	_place_component( self, available_bounds )
 
 	var inner_bounds = _with_margins( Rect2(Vector2(0,0),size) )
+	var pos = inner_bounds.position
+	var sz = inner_bounds.size
+
+	var diff = sz.x - _get_sum_of_child_sizes().x
+	match content_alignment:
+		HorizontalContentAlignment.LEFT:   pass
+		HorizontalContentAlignment.CENTER: pos.x += int(diff/2.0)
+		HorizontalContentAlignment.RIGHT:  pos.x += diff
 
 	for i in range(get_child_count()):
 		var child = get_child(i)
 		if not (child is Control) or not child.visible: continue
 		if child is Control:
-			_perform_component_layout( child, Rect2(inner_bounds.position,Vector2(child.size.x,inner_bounds.size.y)) )
-			inner_bounds.position += Vector2( child.size.x, 0 )
+			_perform_component_layout( child, Rect2(pos,Vector2(child.size.x,sz.y)) )
+			pos += Vector2( child.size.x, 0 )
