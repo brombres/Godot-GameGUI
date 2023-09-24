@@ -25,11 +25,11 @@ GameGUI is a set of Godot Control nodes that provide alternative layout capabili
 ## Key Features
 - GameGUI layout nodes can be intermingled with standard Control nodes.
 - Layout of GameGUI subtrees is performed through recursive subdivision of available space via nested nodes.
-- Each GameGUI node can be configured to use various scaling modes that determine how it uses the space available to it: Expand-to-Fill, Aspect-Fit, etc.
+- Each GameGUI node can be configured to use various sizing modes that determine how it uses the space available to it: Expand-to-Fill, Aspect-Fit, etc.
 - Godot Control Container Sizing alignments (`Shrink Begin`, etc.) are respected.
 - GGComponent is the base node that implements the core functionality of the GameGUI system.
 - GGHBox and GGVbox are the layout workhorses. They are GameGUI variations of HBoxContainer and VBoxContainer that distribute available space to their children in an intuitive way.
-- Minimum and maximum node sizes can be set with a GGLimitedSizeComponent node.
+- Minimum and maximum node constraints can be established with a GGLimitedSizeComponent node.
 - Non-GameGUI Control nodes can be children of GameGUI nodes. They are stretched horizontally and vertically to fit the space their parent provides.
 - Any control node can be adapted to have the same scaling options as a GGComponent node by extending them with "adapter code" that adds certain properties and methods, making the control node a "duck-typed" fit. See GGTextureRect for a general example of adapter code that can be copy-pasted with minimal changes, or see GGLabel for code that auto-scales text size as well.
 - GGLabel, GGRichTextLabel, and GGButton are adapted versions of their namesakes that can scale their text size with the layout size.
@@ -84,7 +84,7 @@ GameGUI is a set of Godot Control nodes that provide alternative layout capabili
   <tr>
     <td width=80px><img src="Media/Images/Icons/GGInitialWindowSize.png"></td>
     <td>GGInitialWindowSize</td>
-    <td>IF it is the root node of a scene, sets the window size to its own size on launch. Useful for testing independent UI component scenes at typical aspect ratios. If it is not the root scene node the window size is unaffected.</td>
+    <td>If it is the root node of a scene, sets the window size to its own size on launch. Useful for testing independent UI component scenes at typical aspect ratios. If it is not the root scene node the window size is unaffected.</td>
   </tr>
   <tr>
     <td width=80px><img src="Media/Images/Icons/GGLimitedSizeComponent.png"></td>
@@ -161,7 +161,7 @@ Mode | Description
 **Expand-to-Fill** | The component stretches or compresses to fill the available area.<br><br>![Expand-to-Fill Demo](Media/Images/ScalingMode-ExpandToFill.gif)
 **Aspect-Fit** | The component maintains the specified aspect ratio and is sized as large as possible while still fitting in the available area.<br><br>![Aspect-Fit Demo](Media/Images/ScalingMode-AspectFit.gif)<br><br>The <b>Layout Size</b> property should be set to the desired aspect ratio. Note that 1680x840 has the same effect as 168x84, etc.<br><br>![Aspect-Layout-Size](Media/Images/ScalingMode-AspectFit-LayoutSize.png)
 **Aspect-Fill** | The component maintains the specified aspect ratio and is sized as small as possible while still completely filling the available area.<br><br>![Aspect-Fill Demo](Media/Images/ScalingMode-AspectFill.gif)<br><br>Note that Container Sizing options can be used to pin the content to a side or a corner.<br><br>![Aspect-Fill Demo 2](Media/Images/ScalingMode-AspectFill-2.gif)
-**Proportional** | Proportional mode can be used in one of two ways:<br><br>1. In the standard mode, the node size or other applicable property (such as GGMarginLayout margins) becomes a fraction of its available layout area, from 0.0 to 1.0.<br>![Proportional Demo](Media/Images/ScalingMode-Proportional-1.gif)<br><br>2. Alternatively, a component's `reference node` property can be set and the proportional value is now relative to the size of the reference node. The reference node should be in a higher subtree (closer to the root) than the node referencing it to ensure that the reference node size is determined first. In the example below, a square-aspect component is used as the reference node for a GGMarginLayout so that the gap around the image has the same thickness on all sides.<br>![Proportional Demo](Media/Images/ScalingMode-Proportional-2.gif)
+**Proportional** | Proportional mode can be used in one of two ways:<br><br>1. In the standard mode, the node size or other applicable property (such as GGMarginLayout margins) becomes a fraction of its available layout area, from 0.0 to 1.0.<br>![Proportional Demo](Media/Images/ScalingMode-Proportional-1.gif)<br><br>2. Alternatively, a component's `reference node` property can be set and the proportional value is now relative to the size of the reference node. The reference node should be in a higher subtree (closer to the root) than the node referencing it to ensure that the reference node size is established first. In the example below, a square-aspect component is used as the reference node for a GGMarginLayout so that the gap around the image has the same thickness on all sides.<br>![Proportional Demo](Media/Images/ScalingMode-Proportional-2.gif)
 **Shrink-to-Fit** | The component is sized as small as possible to enclose all of its children. For example, here is a GGVBox with fixed-size children set to **Shrink-to-Fit**.<br><br>![Shrink-to-Fit](Media/Images/ScalingMode-ShrinkToFit.png)
 **Fixed** | The component uses **Layout Size** as a fixed pixel size.<br><br>![Fixed](Media/Images/ScalingMode-Fixed.gif)
 **Parameter** | The component sets its pixel size to the subtree parameters named by the properties **Width Parameter** and/or **Height Parameter**. Create a `GGLayoutConfig` config as the first child of a GameGUI subtree, extend its script, add the `@tool` annotation, and override `func _on_begin_layout(display_size:Vector2)` to update parameters (via `set_parameter(name:String,value:Variant)`, `get_parameter(name:String)->Variant`, and/or `has_parameter(name:String)->bool`) whenever the layout is about to be updated.<br><br>![Fixed](Media/Images/ScalingMode-Parameter.gif)<br><br>Parameter values can be added, inspected, and removed in the editor by examining the **Parameters** property of a GameGUI subtree root.<br><br>![Parameter-2](Media/Images/ScalingMode-Parameter-2.png)
@@ -488,9 +488,17 @@ To enable Linear Mipmap mode, inspect the properties of the scene's root node (o
 
 ![GGLayoutConfig](Media/Images/Icons/GGLayoutConfig.png)
 
-Place this node near the root of the scene, extend the script, make it a `@tool`, override `func _on_begin_layout(display_size:Vector2)`, and call `set_parameter(name,value)` with various computed values related to the current display size. Those parameters can be automatically used by other GameGUI nodes by setting their sizing mode to *Parameter* and supplying the desired parameter name.
+Place this node near the root of the GameGUI scene or subtree, extend the script, make it a `@tool`, override `func _on_begin_layout(display_size:Vector2)`, and call inherited method `set_parameter(name,value)` with various computed values related to the current display size. Those parameters can be automatically used by other GameGUI nodes by setting their sizing mode to *Parameter* and supplying the desired parameter name.
 
 ![GGLayoutConfig](Media/Images/ScalingMode-Parameter.gif)
+
+All GameGUI components define the following methods. A "subtree root" is the highest-level ancestor in an unbroken line of GameGUI component ancestors from the component that one of these methods is called on.
+
+Method | Description
+-------|------------------
+`has_parameter(name:String)->bool` | Returns true if the subtree root's `parameters` dictionary defines a value with the specified name.
+`set_parameter(name:String,value:Variant)` | Sets a value in the subtree root's `parameters` dictionary.
+`get_parameter(name:String,default_result:Variant=0)->Variant` | Returns the specified value from the subtree root's `parameters` dictionary, if it exists, or else returns `default_result` if the value doesn't exist.
 
 ### GGParameterSetter
 
