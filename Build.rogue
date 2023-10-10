@@ -51,6 +51,8 @@ routine rogo_update_version( version:String )
     patcher.replace_line( "version=", ''version="$"''(version) )
     patcher.save
   endBlock
+
+  Files("addons/GameGUI/**").sync_to( File("DemoProject/addons/GameGUI"), &keep_unused, &verbose )
 endRoutine
 
 routine rogo_commit( new_version:String )
