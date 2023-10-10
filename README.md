@@ -3,8 +3,8 @@ A Godot 4.x plug-in that implements a rich and robust dynamic layout and sizing 
 
 About      | Current Release
 -----------|-----------------------
-Version    | 1.3
-Date       | September 23, 2023
+Version    | 1.3.1
+Date       | October 10, 2023
 Change Log | [Change Log](ChangeLog.md)
 Platform   | Godot 4.x (tested on 4.2-dev3)
 License    | [MIT License](LICENSE)

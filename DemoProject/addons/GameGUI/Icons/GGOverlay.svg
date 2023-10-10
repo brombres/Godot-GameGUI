@@ -2,18 +2,16 @@
 <svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <title>GGOverlay</title>
     <g id="GGOverlay" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Group" transform="translate(1, 1)" fill="#8EEF97">
-            <rect id="Rectangle" x="0" y="0" width="2" height="4"></rect>
-            <rect id="Rectangle-Copy-2" x="0" y="10" width="2" height="4"></rect>
-            <rect id="Rectangle-Copy-3" x="12" y="10" width="2" height="4"></rect>
-            <rect id="Rectangle-Copy-4" x="12" y="0" width="2" height="4"></rect>
-            <rect id="Rectangle-Copy" x="2" y="0" width="2" height="2"></rect>
-            <rect id="Rectangle-Copy-8" x="5" y="0" width="1" height="14"></rect>
-            <circle id="Oval" cx="9" cy="9" r="2"></circle>
-            <rect id="Rectangle-Copy-9" x="0" y="5" width="14" height="1"></rect>
-            <rect id="Rectangle-Copy-5" x="10" y="0" width="2" height="2"></rect>
-            <rect id="Rectangle-Copy-6" x="10" y="12" width="2" height="2"></rect>
-            <rect id="Rectangle-Copy-7" x="2" y="12" width="2" height="2"></rect>
+        <g id="Group" transform="translate(1, 1)">
+            <rect id="Rectangle" fill="#8EEF97" x="0" y="0" width="2" height="4"></rect>
+            <rect id="Rectangle-Copy-2" fill="#8EEF97" x="0" y="10" width="2" height="4"></rect>
+            <rect id="Rectangle-Copy-3" fill="#8EEF97" x="12" y="10" width="2" height="4"></rect>
+            <rect id="Rectangle-Copy-4" fill="#8EEF97" x="12" y="0" width="2" height="4"></rect>
+            <rect id="Rectangle-Copy" fill="#8EEF97" x="2" y="0" width="2" height="2"></rect>
+            <circle id="Oval" stroke="#8EEF97" stroke-width="2" cx="7" cy="7" r="3"></circle>
+            <rect id="Rectangle-Copy-5" fill="#8EEF97" x="10" y="0" width="2" height="2"></rect>
+            <rect id="Rectangle-Copy-6" fill="#8EEF97" x="10" y="12" width="2" height="2"></rect>
+            <rect id="Rectangle-Copy-7" fill="#8EEF97" x="2" y="12" width="2" height="2"></rect>
         </g>
     </g>
 </svg>

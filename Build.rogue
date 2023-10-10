@@ -74,6 +74,11 @@ routine rogo_publish( new_version:String )
   new_version .= after_any("v")
   if (not String.exists(new_version)) throw Error( "Expected version number after 'rogo publish'. Current version: $"(current_version) )
   if (not System.find_executable("gh")) throw Error( "The GitHub command line tool 'gh' must be installed." )
+
+  if (not String(File("ChangeLog.md")).contains(new_version))
+    throw Error( "The change log needs updating." )
+  endIf
+
   rogo_commit( new_version )
 
   # These can be hard-coded to suit your project
