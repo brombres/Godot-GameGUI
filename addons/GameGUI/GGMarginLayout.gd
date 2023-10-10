@@ -35,7 +35,7 @@ enum MarginType
 				if margin_type == MarginType.PROPORTIONAL and ref_size.x and ref_size.y:
 					left_margin = int( left_margin * ref_size.x )
 					top_margin = int( top_margin * ref_size.y )
-					right_margin = int( right_margin * ref_size.y )
+					right_margin = int( right_margin * ref_size.x )
 					bottom_margin = int( bottom_margin * ref_size.y )
 				else:
 					left_margin = 0
@@ -210,7 +210,7 @@ func _with_margins( rect:Rect2 )->Rect2:
 			var x = rect.position.x + get_parameter(left_parameter,0)
 			var y = rect.position.y + get_parameter(top_parameter,0)
 			var x2 = rect.position.x + (rect.size.x - get_parameter(right_parameter,0))
-			var y2 = rect.position.x + (rect.size.y - get_parameter(bottom_parameter,0))
+			var y2 = rect.position.y + (rect.size.y - get_parameter(bottom_parameter,0))
 			var w = x2 - x
 			var h = y2 - y
 			if w < 0: w = 0
