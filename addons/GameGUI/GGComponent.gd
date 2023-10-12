@@ -43,12 +43,22 @@ enum ScalingMode
 	PARAMETER       ## One of the subtree [member parameters] is used as the size.
 }
 
+## The text sizing mode for [GGLabel], [GGRichTextLabel], and [GGButton].
 enum TextSizeMode
 {
-	DEFAULT,  ## Text size is whatever size you assign in the editor.
-	SCALE,    ## Text scales with the size of a reference node.
+	DEFAULT,    ## Text size is whatever size you assign in the editor.
+	SCALE,      ## Text scales with the size of a reference node.
 	PARAMETER   ## Text size is set to the value of one of the defined [member parameters].
 }
+
+## The texture fill mode used by [method fill_texture].
+enum FillMode
+{
+	STRETCH,  # Stretch or compress each patch to cover the available space.
+	TILE,     # Repeatedly tile each patch at its original pixel size to cover the available space.
+	TILE_FIT  # Tile each patche, stretching slightly as necessary to ensure a whole number of tiles fit in the available space.
+}
+
 
 #-------------------------------------------------------------------------------
 # PROPERTIES
@@ -141,6 +151,105 @@ var _layout_stage := 0 # top-level component use. 0=layout finished, 1=layout re
 #-------------------------------------------------------------------------------
 # EXTERNAL API
 #-------------------------------------------------------------------------------
+
+## Utility method that draws a texture with any combination of horizontal and vertical fill modes: Stretch, Tile, Tile Fit.
+## Used primarily by [GGComponent].
+func fill_texture( texture:Texture2D, dest_rect:Rect2, src_rect:Rect2, horizontal_fill_mode:FillMode=FillMode.STRETCH,
+		vertical_fill_mode:FillMode=FillMode.STRETCH, modulate:Color=Color(1,1,1,1) ):
+	if dest_rect.size.x <= 0 or dest_rect.size.y <= 0: return
+
+	if horizontal_fill_mode == FillMode.TILE and src_rect.size.x > dest_rect.size.x:
+		horizontal_fill_mode = FillMode.TILE_FIT
+
+	if vertical_fill_mode == FillMode.TILE and src_rect.size.y > dest_rect.size.y:
+		vertical_fill_mode = FillMode.TILE_FIT
+
+	match horizontal_fill_mode:
+		FillMode.TILE:
+			var tile_size = src_rect.size
+			var dest_pos  = dest_rect.position
+			var dest_w = dest_rect.size.x
+			var dest_h = dest_rect.size.y
+			while dest_w > 0:
+				if tile_size.x <= dest_w:
+					var _dest_rect = Rect2( dest_pos, Vector2(tile_size.x,dest_h) )
+					fill_texture( texture, _dest_rect, src_rect, FillMode.STRETCH, vertical_fill_mode, modulate )
+				else:
+					var _dest_rect = Rect2( dest_pos, Vector2(dest_w,dest_h) )
+					var _src_rect = Rect2( src_rect.position, Vector2(dest_w,src_rect.size.y) )
+					fill_texture( texture, _dest_rect, _src_rect, FillMode.STRETCH, vertical_fill_mode, modulate )
+					return
+
+				dest_pos += Vector2( tile_size.x, 0 )
+				dest_w   -= tile_size.x
+			return
+
+		FillMode.TILE_FIT:
+			var n = int( (dest_rect.size.x / src_rect.size.x) + 0.5 )
+			if n == 0:
+				fill_texture( texture, dest_rect, src_rect, FillMode.STRETCH, vertical_fill_mode, modulate )
+			else:
+				var tile_size = Vector2( dest_rect.size.x / n, src_rect.size.y )
+				var dest_pos  = dest_rect.position
+				var dest_w = dest_rect.size.x
+				var dest_h = dest_rect.size.y
+				while dest_w > 0:
+					if tile_size.x <= dest_w:
+						var _dest_rect = Rect2( dest_pos, Vector2(tile_size.x,dest_h) )
+						fill_texture( texture, _dest_rect, src_rect, FillMode.STRETCH, vertical_fill_mode, modulate )
+					else:
+						var _dest_rect = Rect2( dest_pos, Vector2(dest_w,dest_h) )
+						fill_texture( texture, _dest_rect, src_rect, FillMode.STRETCH, vertical_fill_mode, modulate )
+						return
+
+					dest_pos += Vector2( tile_size.x, 0 )
+					dest_w   -= tile_size.x
+			return
+
+	match vertical_fill_mode:
+		FillMode.TILE:
+			var tile_size = src_rect.size
+			var dest_pos  = dest_rect.position
+			var dest_w = dest_rect.size.x
+			var dest_h = dest_rect.size.y
+			while dest_h > 0:
+				if tile_size.y <= dest_h:
+					var _dest_rect = Rect2( dest_pos, Vector2(dest_w, tile_size.y) )
+					fill_texture( texture, _dest_rect, src_rect, horizontal_fill_mode, FillMode.STRETCH, modulate )
+				else:
+					var _dest_rect = Rect2( dest_pos, Vector2(dest_w,dest_h) )
+					var _src_rect = Rect2( src_rect.position, Vector2(src_rect.size.x,dest_h) )
+					fill_texture( texture, _dest_rect, _src_rect, horizontal_fill_mode, FillMode.STRETCH, modulate )
+					return
+
+				dest_pos += Vector2( 0, tile_size.y )
+				dest_h   -= tile_size.y
+			return
+
+		FillMode.TILE_FIT:
+			var n = int( (dest_rect.size.y / src_rect.size.y) + 0.5 )
+			if n == 0:
+				fill_texture( texture, dest_rect, src_rect, horizontal_fill_mode, FillMode.STRETCH, modulate )
+			else:
+				var tile_size = Vector2( src_rect.size.x, dest_rect.size.y / n )
+				var dest_pos  = dest_rect.position
+				var dest_w = dest_rect.size.x
+				var dest_h = dest_rect.size.y
+				while dest_h > 0:
+					if tile_size.y <= dest_h:
+						var _dest_rect = Rect2( dest_pos, Vector2(dest_w, tile_size.y) )
+						fill_texture( texture, _dest_rect, src_rect, horizontal_fill_mode, FillMode.STRETCH, modulate )
+					else:
+						var _dest_rect = Rect2( dest_pos, Vector2(dest_w,dest_h) )
+						fill_texture( texture, _dest_rect, src_rect, horizontal_fill_mode, FillMode.STRETCH, modulate )
+						return
+
+					dest_pos += Vector2( 0, tile_size.y )
+					dest_h   -= tile_size.y
+			return
+
+	# Horizontal and vertical fill are both STRETCH
+	draw_texture_rect_region( texture, dest_rect, src_rect, modulate )
 
 ## Returns the specified parameter's value if it exists in the [member parameters]
 ## of this node or a [GGComponent] ancestor. If it doesn't exist, returns

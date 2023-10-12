@@ -132,6 +132,11 @@ GameGUI is a set of Godot Control nodes that provide alternative layout capabili
     <td>GGTextureRect</td>
     <td>A TextureRect that uses the GameGUI layout system and automatically configures itself with appropriate defaults.</td>
   </tr>
+  <tr>
+    <td width=80px><img src="Media/Images/Icons/GGNinePatchRect.png"></td>
+    <td>GGNinePatchRect</td>
+    <td>Replicates NinePatchRect functionality and makes the following improvement: when the bounds of a GGNinePatchRect are smaller than its corners and edges, the corners and edges are proportionally shrunk to fit the available bounds.</td>
+  </tr>
 </table>
 
 
@@ -481,6 +486,38 @@ For most purposes the images that provide the textures for GGTextureRect nodes s
 To enable Linear Mipmap mode, inspect the properties of the scene's root node (or the CanvasItem parent node that's closest to the scene root) and change `Texture > Filter` to `Linear Mipmap`. As nodes use mode `Inherited` by default, all other nodes will now use Linear Mipmap mode.
 
 ![TextureImportSettings](Media/Images/LinearMipmapMode.png)
+
+### GGNinePatchRect
+
+![GGNinePatchRect](Media/Images/Icons/GGNinePatchRect.png)
+
+GGNinePatchRect replicates NinePatchRect functionality and makes the following improvement: when the bounds of a GGNinePatchRect are smaller than its corners and edges, the corners and edges are proportionally shrunk to fit the available bounds.
+
+![GGLayoutConfig](Media/Images/GGNinePatchRect.gif)
+
+(The 9-patch image is from [pixy.org](https://pixy.org/474956/))
+
+#### Properties
+
+![GGNinePatchRect](Media/Images/GGNinePatchRect.png)
+
+Property|Description
+--------|-----------
+**Texture** | The texture to use for the nine-patch rect.
+**Draw Center** | Check to draw the center patch of the nine-patch rect (default); uncheck to omit the center patch.
+**Patch Margin: Left** | The pixel width of the left side of the texture that comprises three patches: top-left, left, and bottom-left.
+**Patch Margin: Top** | The pixel height of the top side of the texture that comprises three patches: top-left, top, and top-right.
+**Patch Margin: Right** | The pixel width of the right side of the texture that comprises three patches: top-right, right, and bottom-right.
+**Patch Margin: Bottom** | The pixel height of the bottom side of the texture that comprises three patches: bottom-left, bottom, and bottom-right.
+**Fill Mode: Horizontal** | The horizontal fill mode for each patch.
+**Fill Mode: Vertical**   | Ther vertical fill mode for each patch.
+
+Fill Mode | Description
+----------|------------
+Stretch   | Stretch or compress each patch to cover the available space.
+Tile      | Repeatedly tile each patch at its original pixel size to cover the available space.
+Tile Fit  | Tile each patch, stretching slightly as necessary to ensure a whole number of tiles fit in the available space.
+
 
 ## Parameter Components
 
