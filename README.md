@@ -39,6 +39,16 @@ GameGUI is a set of Godot Control nodes that provide alternative layout capabili
 
 # Installation
 
+## Installing From Godot AssetLib
+
+1. Switch to the "AssetLib" tab in the Godot editor.
+2. Search for "GameGUI".
+3. Double-click and install the GameGUI library.
+
+![Installing via AssetLib](Media/Images/InstallViaAssetLib.png)
+
+## Installing From GitHub Release
+
 1. Download the latest [release](https://github.com/brombres/Godot-GameGUI/releases).
 
 2. Drag the `addons` folder into a Godot project.
