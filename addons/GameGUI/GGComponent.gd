@@ -485,6 +485,8 @@ func _update_layout():
 	if not _is_top_level or _layout_stage == 2: return
 	_layout_stage = 2
 
+	_update_safe_area()
+
 	begin_layout.emit()
 
 	_update_size()
@@ -516,6 +518,7 @@ func _enter_tree():
 	if _is_top_level:
 		resized.connect( request_layout )
 		sort_children.connect( _on_sort_children )
+		_update_safe_area()
 
 	child_entered_tree.connect( _on_child_entered_tree )
 	child_exiting_tree.connect( _on_child_exiting_tree )
@@ -558,3 +561,17 @@ func _on_child_visibility_changed():
 func _on_sort_children():
 	_update_layout()
 
+func _update_safe_area():
+	var viewport = get_viewport()
+	if viewport:
+		var display_size = viewport.get_visible_rect().size
+		var safe_area = Rect2( Vector2(0,0), display_size )
+
+		match DisplayServer.window_get_mode():
+			DisplayServer.WindowMode.WINDOW_MODE_FULLSCREEN, DisplayServer.WindowMode.WINDOW_MODE_EXCLUSIVE_FULLSCREEN:
+				safe_area = DisplayServer.get_display_safe_area()
+
+		set_parameter( "safe_area_left_margin", safe_area.position.x )
+		set_parameter( "safe_area_top_margin", safe_area.position.y )
+		set_parameter( "safe_area_right_margin", display_size.x - safe_area.end.x )
+		set_parameter( "safe_area_bottom_margin", display_size.y - safe_area.end.y )

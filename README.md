@@ -35,6 +35,7 @@ GameGUI is a set of Godot Control nodes that provide alternative layout capabili
 - GGLabel, GGRichTextLabel, and GGButton are adapted versions of their namesakes that can scale their text size with the layout size.
 - GameGUI subtrees can define key-value "parameters" that components use for their size and/or for certain other properties. This allows complex sizing logic to be executed via GDScript and the results stored in the subtree for use by the components.
 - GGLayoutConfig provides a convenient way to set parameters by extending its script and overriding a single method.
+- [Built-in parameters](#Built-In-Parameters) `safe_area_[left|top|right|bottom]_margin` are automatically set by GameGUI.
 
 # Installation
 
@@ -179,6 +180,30 @@ Aspect-Fit      | Aspect-Fit    | Component maintains the specified aspect ratio
 Aspect-Fill     | Aspect-Fill   | Component maintains the specified aspect ratio and is sized as small as possible while still completely filling the available area.
 Aspect-Fill     | Aspect-Fit    | Component occupies all available width while maintaining the specified aspect ratio.
 Aspect-Fit      | Aspect-Fill   | Component occupies all available height while maintaining the specified aspect ratio.
+
+## Built-In Parameters
+
+GameGUI automatically sets and maintains a small set of built-in parameters.
+
+Any component extending GGComponent can set its width and/or height to a parameter value by selecting the "Fixed" Horizontal and/or Vertical Mode and supplying the appropriate parameter name in the "Width Parameter" and/or "Height Parameter" field.
+
+In scripts extending a GameGUI component these parameters can be retrieved with `get_parameter("parameter_name",default_value)`.
+
+### Safe Area Margin Parameters
+
+Each margin parameter contains the number of pixels at a given edge of the display that cannot be safely drawn to due to a notch or rounded corners. For example, on iPhone 12 Pro, `safe_area_top_margin` will be set to `132` and `safe_area_bottom_margin` will be set to `102`.
+
+Parameter Name            | Description
+--------------------------|--------------
+`safe_area_left_margin`   | The left pixel margin outside the safe area.
+`safe_area_top_margin`    | The top pixel margin outside the safe area.
+`safe_area_right_margin`  | The right pixel margin outside the safe area.
+`safe_area_bottom_margin` | The bottom pixel margin outside the safe area.
+
+Here is a simple GameGUI setup to include safe area margins in an app. A GGVbox contains top and bottom GGFiller components, their heights set to `Parameter` `safe_area_top_margin` and `Parameter` `safe_area_bottom_margin`, respectively. These parameters will be zero during desktop testing in windowed mode and non-zero on any modern iPhone.
+
+![Safe Area Margin Parameters](Media/Images/SafeAreaMarginParameters.png)
+
 
 # Component Details
 
