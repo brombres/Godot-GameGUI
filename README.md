@@ -3,8 +3,8 @@ A Godot 4.x plug-in that implements a rich and robust dynamic layout and sizing 
 
 About      | Current Release
 -----------|-----------------------
-Version    | 1.3.1
-Date       | October 10, 2023
+Version    | 1.4
+Date       | October 14, 2023
 Change Log | [Change Log](ChangeLog.md)
 Platform   | Godot 4.x (tested on 4.2-dev3)
 License    | [MIT License](LICENSE)
@@ -136,7 +136,7 @@ GameGUI is a set of Godot Control nodes that provide alternative layout capabili
   <tr>
     <td width=80px><img src="Media/Images/Icons/GGNinePatchRect.png"></td>
     <td>GGNinePatchRect</td>
-    <td>Replicates NinePatchRect functionality and makes the following improvement: when the bounds of a GGNinePatchRect are smaller than its corners and edges, the corners and edges are proportionally shrunk to fit the available bounds.</td>
+    <td>Replicates NinePatchRect functionality and makes the following improvement: when the bounds of a GGNinePatchRect are smaller than its corners, the corners are proportionally shrunk to fit the available bounds.</td>
   </tr>
 </table>
 
@@ -200,7 +200,7 @@ Parameter Name            | Description
 `safe_area_right_margin`  | The right pixel margin outside the safe area.
 `safe_area_bottom_margin` | The bottom pixel margin outside the safe area.
 
-Here is a simple GameGUI setup to include safe area margins in an app. A GGVbox contains top and bottom GGFiller components, their heights set to `Parameter` `safe_area_top_margin` and `Parameter` `safe_area_bottom_margin`, respectively. These parameters will be zero during desktop testing in windowed mode and non-zero on any modern iPhone.
+Here is a simple GameGUI setup to include safe area margins in an app. A GGVbox contains top and bottom GGFiller components, their heights set to `Parameter` `safe_area_top_margin` and `Parameter` `safe_area_bottom_margin`, respectively. These parameters will be zero during desktop testing in windowed mode and non-zero on any modern iPhone, for example.
 
 ![Safe Area Margin Parameters](Media/Images/SafeAreaMarginParameters.png)
 
@@ -516,7 +516,7 @@ To enable Linear Mipmap mode, inspect the properties of the scene's root node (o
 
 ![GGNinePatchRect](Media/Images/Icons/GGNinePatchRect.png)
 
-GGNinePatchRect replicates NinePatchRect functionality and makes the following improvement: when the bounds of a GGNinePatchRect are smaller than its corners and edges, the corners and edges are proportionally shrunk to fit the available bounds.
+GGNinePatchRect replicates NinePatchRect functionality and makes the following improvement: when the bounds of a GGNinePatchRect are smaller than its corners, the corners are proportionally shrunk to fit the available bounds.
 
 ![GGLayoutConfig](Media/Images/GGNinePatchRect.gif)
 
