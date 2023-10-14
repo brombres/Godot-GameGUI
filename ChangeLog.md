@@ -1,6 +1,6 @@
 # GameGUI Change Log
 
-## v1.4 (October 14, 2023)
+## v1.4.1 (October 14, 2023)
 
 ### [GGNinePatchRect](README.md#GGNinePatchRect)
 New component GGNinePatchRect replicates NinePatchRect functionality and makes the following improvement: when the bounds of a GGNinePatchRect are smaller than its corners, the corners are proportionally shrunk to fit the available bounds.
