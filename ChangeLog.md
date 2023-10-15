@@ -1,5 +1,17 @@
 # GameGUI Change Log
 
+## v1.4.2 (October 15, 2023)
+
+### Structural Changes For Godot AssetLib
+
+- No actual code changes.
+- Version 1.4.1 was published on Godot Asset Library.
+- The 1.4.1 download is bloated with media files and there is no `.gdignore` inside the folder.
+- A mininmal plug-in branch has been created, called `addon`.
+- This `addon` branch will be the one linked to in the asset library.
+- `addon` v1.4.1 was submitted to AssetLib but it seems like the maintainers may not be willing to approve the commit number change without a corresponding version number bump.
+- Consequently this v1.4.2 release is in hopes of getting the compact version live on the asset library.
+
 ## v1.4.1 (October 14, 2023)
 
 ### [GGNinePatchRect](README.md#GGNinePatchRect)
