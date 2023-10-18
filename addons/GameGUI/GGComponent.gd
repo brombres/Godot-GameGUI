@@ -296,6 +296,11 @@ func request_layout():
 #-------------------------------------------------------------------------------
 # KEY OVERRIDES
 #-------------------------------------------------------------------------------
+func _on_resolve_size( available_size:Vector2 ):
+	# Overrideable.
+	# Called just before this component's size is resolved.
+	# Override and adjust this component's size if desired.
+	pass
 
 func _on_update_size():
 	# Overrideable.
@@ -382,7 +387,12 @@ func _resolve_child_size( child:Node, available_size:Vector2, limited:bool=false
 func _resolve_component_size( component:Node, available_size:Vector2 )->Vector2:
 	var component_size := available_size
 
-	var has_mode = component is GGComponent or component.has_method("request_layout")
+	var is_gg = component is GGComponent
+
+	if is_gg or component.has_method("_on_resolve_size"):
+		component._on_resolve_size( available_size )
+
+	var has_mode = is_gg or component.has_method("request_layout")
 	var h_mode = component.horizontal_mode if has_mode else ScalingMode.EXPAND_TO_FILL
 	var v_mode = component.vertical_mode if has_mode else ScalingMode.EXPAND_TO_FILL
 
@@ -568,10 +578,12 @@ func _update_safe_area():
 		var safe_area = Rect2( Vector2(0,0), display_size )
 
 		match DisplayServer.window_get_mode():
-			DisplayServer.WindowMode.WINDOW_MODE_FULLSCREEN, DisplayServer.WindowMode.WINDOW_MODE_EXCLUSIVE_FULLSCREEN:
+			DisplayServer.WindowMode.WINDOW_MODE_FULLSCREEN, \
+			DisplayServer.WindowMode.WINDOW_MODE_EXCLUSIVE_FULLSCREEN:
 				safe_area = DisplayServer.get_display_safe_area()
 
 		set_parameter( "safe_area_left_margin", safe_area.position.x )
 		set_parameter( "safe_area_top_margin", safe_area.position.y )
 		set_parameter( "safe_area_right_margin", display_size.x - safe_area.end.x )
 		set_parameter( "safe_area_bottom_margin", display_size.y - safe_area.end.y )
+
