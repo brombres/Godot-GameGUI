@@ -140,8 +140,14 @@ func set_parameter( parameter_name:String, value:Variant ):
 	var top = get_top_level_component()
 	if top: top.parameters[parameter_name] = value
 
+# Called when this component is about to compute its size. Any size computations
+# relative to reference nodes higher in the tree should be performed here.
+func _on_resolve_size( available_size:Vector2 ):
+	pass
+
 # Called at the beginning of GGLayout. Adjust 'horizontal_mode',
-# 'vertical_mode', and/or 'layout_size'.
+# 'vertical_mode', and/or 'layout_size'. Other nodes may not have their sizes set yet,
+# so defer relative size computations to _on_resolve_size(available_size:Vector2).
 func _on_update_size():
 	pass
 

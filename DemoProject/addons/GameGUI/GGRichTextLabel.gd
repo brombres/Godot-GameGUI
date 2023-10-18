@@ -239,9 +239,9 @@ func set_parameter( parameter_name:String, value:Variant ):
 	var top = get_top_level_component()
 	if top: top.parameters[parameter_name] = value
 
-# Called at the beginning of GGLayout. Adjust 'horizontal_mode',
-# 'vertical_mode', and/or 'layout_size'.
-func _on_update_size():
+# Called when this component is about to compute its size. Any size computations
+# relative to reference nodes higher in the tree should be performed here.
+func _on_resolve_size( available_size:Vector2 ):
 	if Engine.is_editor_hint():
 		match text_size_mode:
 			GGComponent.TextSizeMode.DEFAULT:
