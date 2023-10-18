@@ -1,5 +1,14 @@
 # GameGUI Change Log
 
+## v1.5 (October 18, 2023)
+
+### Text Scaling Bugfix
+- Scaling text nodes previously failed to update their text size on the first layout. This is fixed in v1.5.
+- If defined on any GameGUI node or child of a GameGUI node, the new `_on_resolve_size(available_size:Vector2)` event callback is called prior to resolving each component's size.
+- No action is required. However, a component can adjust its sizing mode, its layout size, and/or any other properties in this callback.
+- Scaling text components GGLabel, GGRichTextLabel, and GGButton formerly set their text size in `_on_update_size()`. However the reference nodes they use to determine their current font size most likely did not have their node sizes set on the first layout.
+- The scaling text components now update their font size in `_on_resolve_size()` instead because any nodes higher in the tree will have resolved their size.
+
 ## v1.4.2 (October 15, 2023)
 
 ### Structural Changes For Godot AssetLib

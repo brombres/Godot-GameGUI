@@ -19,6 +19,7 @@ endRoutine
 
 routine rogo_update_version( version:String )
   # Updates the version number and date in the project source and README.md.
+  if (not version) version = ""
   version .= after_any("v")
   localize current_version
   if (version.count == 0) throw Error( "New version number expected, e.g. '1.0.2'. Current version: $"(current_version) )
