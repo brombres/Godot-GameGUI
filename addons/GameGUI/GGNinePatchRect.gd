@@ -77,27 +77,27 @@ func _draw():
 
 	var pos = position
 	if _top > 0:
-		if _left > 0:   draw_texture_rect_region( texture, Rect2(pos,Vector2(_left,_top)), _piece_rects[0] )
+		if _left > 0:   draw_texture_rect_region( texture, Rect2(pos,Vector2(_left,_top)), _piece_rects[0], modulate )
 		pos += Vector2( _left, 0 )
-		fill_texture( texture, Rect2(pos,Vector2(mid_w,_top)), _piece_rects[1], horizontal_fill, vertical_fill )
+		fill_texture( texture, Rect2(pos,Vector2(mid_w,_top)), _piece_rects[1], horizontal_fill, vertical_fill, modulate )
 		pos += Vector2( mid_w, 0 )
-		if _right > 0:  draw_texture_rect_region( texture, Rect2(pos,Vector2(_right,_top)), _piece_rects[2] )
+		if _right > 0:  draw_texture_rect_region( texture, Rect2(pos,Vector2(_right,_top)), _piece_rects[2], modulate )
 
 	pos = Vector2( position.x, pos.y + _top )
 	if mid_h > 0:
-		fill_texture( texture, Rect2(pos,Vector2(_left,mid_h)), _piece_rects[3], horizontal_fill, vertical_fill )
+		fill_texture( texture, Rect2(pos,Vector2(_left,mid_h)), _piece_rects[3], horizontal_fill, vertical_fill, modulate )
 		pos += Vector2( _left, 0 )
-		if draw_center and mid_w > 0:  fill_texture( texture, Rect2(pos,Vector2(mid_w,mid_h)), _piece_rects[4], horizontal_fill, vertical_fill )
+		if draw_center and mid_w > 0:  fill_texture( texture, Rect2(pos,Vector2(mid_w,mid_h)), _piece_rects[4], horizontal_fill, vertical_fill, modulate )
 		pos += Vector2( mid_w, 0 )
-		fill_texture( texture, Rect2(pos,Vector2(_right,mid_h)), _piece_rects[5], horizontal_fill, vertical_fill )
+		fill_texture( texture, Rect2(pos,Vector2(_right,mid_h)), _piece_rects[5], horizontal_fill, vertical_fill, modulate )
 
 	pos = Vector2( position.x, pos.y + mid_h )
 	if _bottom > 0:
-		if _left > 0:   draw_texture_rect_region( texture, Rect2(pos,Vector2(_left,_bottom)), _piece_rects[6] )
+		if _left > 0:   draw_texture_rect_region( texture, Rect2(pos,Vector2(_left,_bottom)), _piece_rects[6], modulate )
 		pos += Vector2( _left, 0 )
-		fill_texture( texture, Rect2(pos,Vector2(mid_w,_bottom)), _piece_rects[7], horizontal_fill, vertical_fill )
+		fill_texture( texture, Rect2(pos,Vector2(mid_w,_bottom)), _piece_rects[7], horizontal_fill, vertical_fill, modulate )
 		pos += Vector2( mid_w, 0 )
-		if _right > 0:  draw_texture_rect_region( texture, Rect2(pos,Vector2(_right,_bottom)), _piece_rects[8] )
+		if _right > 0:  draw_texture_rect_region( texture, Rect2(pos,Vector2(_right,_bottom)), _piece_rects[8], modulate )
 
 func _update_piece_rects():
 	var x = _texture_region.position.x
